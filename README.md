@@ -1,7 +1,7 @@
 # Mazel
 Projeto do semestre 2024.2.
 ## Premissa
-Irmãos se perdem em uma caverna densa e precisam se reencontrar enquanto enfrentam dificuldades que habitam o labirinto natural. O labirinto está em constante mudança, com paredes que se reconfiguram, tornando a navegação ainda mais desafiadora. No caminho, eles encontram  baús misteriosos que pode conter itens úteis ou armadilhas traiçoeiras, complicando ainda mais sua jornada. Os jogadores devem se comunicar e colaborar para superar desafios, decidir como lidar com os baús e encontrar maneiras de se adaptar às mudanças do labirinto. A experiência explora a amizade e a resiliência, enquanto tentam escapar da mata antes que ela os consuma. 
+Irmãos se perdem em uma caverna densa e precisam se reencontrar enquanto enfrentam dificuldades que habitam o labirinto natural. O labirinto está em constante mudança, com paredes que se reconfiguram, tornando a navegação ainda mais desafiadora. No caminho, eles encontram  baús misteriosos que pode conter itens úteis ou armadilhas traiçoeiras como os [mimicos em Dungeons & Dragons](https://webappstatic.buzzfeed.com/static/2023-04/7/12/asset/3f1cba650973/anigif_sub-buzz-452-1680871444-1.gif), complicando ainda mais sua jornada. Os jogadores devem se comunicar e colaborar para superar desafios, decidir como lidar com os baús e encontrar maneiras de se adaptar às mudanças do labirinto. A experiência explora a amizade e a resiliência, enquanto tentam escapar da mata antes que ela os consuma. 
 
 ### Referências do jogo
 
@@ -22,6 +22,8 @@ Em um cenário com recursos infinitos, "Mazel" seria um jogo de realidade virtua
 
 ### Universo
 
+O universo de "Mazel" é um mundo mágico repleto de maravilhas e mistérios. Nele, a magia permeia tudo, desde a flora até a fauna, criando um ambiente vibrante e dinâmico. Criaturas fantásticas habitam florestas encantadas e montanhas místicas, caverna perigosas. Os habitantes desse mundo mágico variam desde sábios magos e bruxas até criaturas místicas que guardam o equilíbrio do ambiente. 
+
 ### Personagens 
 
 Clover, um historiador aventureiro, decide explorar uma caverna recém-descoberta. Enquanto isso, sua irmã Carrie, mais cautelosa e introvertida, fica preocupada com o tempo que ele demora para voltar e decide ir atrás dele. Ao se perder em caminhos diferentes dentro da caverna, os irmãos acabam presos em lados opostos. 
@@ -38,3 +40,5 @@ Clover, um historiador aventureiro, decide explorar uma caverna recém-descobert
 O objetivo do jogo é simples: os dois jogadores devem se reencontrar em meio ao labirinto em constante transformação. A cada obstáculo superado, eles se aproximam mais um do outro, mas, ao mesmo tempo, o ambiente continua tentando separá-los. Apenas trabalhando juntos e utilizando seus recursos com sabedoria, eles conseguirão escapar.
 
 ### Fontes de receitas
+
+Para monetizar o jogo, "Mazel" oferecerá skins personalizadas para os personagens, permitindo que os jogadores personalizem sua aparência com temas variados, como fantasia e steampunk. Além de expansões de mundos que introduzem novas estéticas e desafios, como ambientes aquáticos ou florestas encantadas.
