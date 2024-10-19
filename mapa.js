@@ -4,11 +4,9 @@ export default class mapa extends Phaser.Scene {
   }
 
   preload () {
-
     this.load.tilemapTiledJSON('mapa', 'assests/mapa/mapa.json')
-    this.load.image('estrutura', 'assests/mapa/estrutura.json')
-    this.load.image('grama', 'assests/mapa/Brick_Texture.json')
-    
+    this.load.image('estrutura', 'assests/mapa/estrutura.png')
+    this.load.image('grama', 'assests/mapa/Brick_Texture.png')
 
     this.load.spritesheet('personagem', 'assets/menino_sem_picareta.png', {
       frameWidth: 64,
@@ -17,15 +15,14 @@ export default class mapa extends Phaser.Scene {
   }
 
   create () {
-    this.tilemap = this.make.tilemap({ key: 'map' })
+    this.tilemapMapa = this.make.tilemap({ key: 'mapa' })
+
     this.tilesetEstrutura = this.tilemapMapa.addTilersetImage('estrutura')
-    this.tilesGrama = this.tilemapMapa.addTilersetImage('grama')
+    this.tilesetGrama = this.tilemapMapa.addTilesetImage('grama')
 
-
-    this.layerChao = this.tilemapMapa.creatStaticLayer('chao', [this.tilesetgrama], 0, 0)
-    this.layerMoveis = this.tilemapMapa.creatStaticLayer('moveis', [this.tilesetestrutura], 0, 0)
-
-
+    this.layerChao = this.tilemapMapa.createLayer('chao', [this.tilesetGrama], 0, 0)
+    this.layerSombra = this.tilemapMapa.createLayer('sombras', 0, 0)
+    this.layerMoveis = this.tilemapMapa.createLayer('moveis', [this.tilesetEstrutura], 0, 0)
 
     this.anims.create({
       key: 'parado',
