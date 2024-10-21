@@ -9,7 +9,7 @@ class Game extends Phaser.Game {
     this.scene.add('abertura', abertura)
     this.scene.add('sala', sala)
     this.scene.add('mapa', mapa)
-    this.scene.star('mapa')
+    this.scene.start('mapa')
   }
 }
 

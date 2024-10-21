@@ -4,11 +4,31 @@ export default class mapa extends Phaser.Scene {
   }
 
   preload () {
-    this.load.tilemapTiledJSON('mapa', 'assests/mapa/mapa.json')
-    this.load.image('estrutura', 'assests/mapa/estrutura.png')
-    this.load.image('grama', 'assests/mapa/Brick_Texture.png')
+    this.load.tilemapTiledJSON('mapa', 'assets/mapa/mapa.json')
+    this.load.image('estrutura', 'assets/mapa/estrutura.png')
+    this.load.image('grama', 'assets/mapa/grama.png')
 
     this.load.spritesheet('personagem', 'assets/menino_sem_picareta.png', {
+      frameWidth: 64,
+      frameHeight: 64
+    })
+
+    this.load.spritesheet('cima', 'assets/cima.png', {
+      frameWidth: 64,
+      frameHeight: 64
+    })
+
+    this.load.spritesheet('baixo', 'assets/baixo.png', {
+      frameWidth: 64,
+      frameHeight: 64
+    })
+
+    this.load.spritesheet('direita', 'assets/direita.png', {
+      frameWidth: 64,
+      frameHeight: 64
+    })
+
+    this.load.spritesheet('esquerda', 'assets/esquerda.png', {
       frameWidth: 64,
       frameHeight: 64
     })
@@ -17,7 +37,7 @@ export default class mapa extends Phaser.Scene {
   create () {
     this.tilemapMapa = this.make.tilemap({ key: 'mapa' })
 
-    this.tilesetEstrutura = this.tilemapMapa.addTilersetImage('estrutura')
+    this.tilesetEstrutura = this.tilemapMapa.addTilesetImage('estrutura')
     this.tilesetGrama = this.tilemapMapa.addTilesetImage('grama')
 
     this.layerChao = this.tilemapMapa.createLayer('chao', [this.tilesetGrama], 0, 0)
@@ -38,15 +58,10 @@ export default class mapa extends Phaser.Scene {
     })
 
     this.personagem = this.physics.add.sprite(50, 225, 'personagem', 15)
-      .setInteractive()
-      .on('pointerdown', () => {
-        if (this.personagem.body.velocity.x === 0) {
-          this.personagem.setVelocityX(100)
-          this.personagem.anims.play('andar-direita')
-        } else {
-          this.personagem.setVelocityX(0)
-          this.personagem.anims.play('parado')
-        }
-      })
+
+    this.cima = this.add.sprite( 70, 300, 'cima', 0)
+    this.baixo = this.add.sprite(70, 390, 'baixo', 0)
+    this.esquerda = this.add.sprite(650, 390, 'esquerda', 0)
+    this.direita = this.add.sprite(750, 390, 'direita', 0)
   }
 }

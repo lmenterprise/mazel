@@ -101,11 +101,11 @@
         {
          "columns":16,
          "firstgid":4,
-         "image":"Brick_Texture.png",
+         "image":"grama.png",
          "imageheight":1024,
          "imagewidth":1024,
          "margin":0,
-         "name":"Brick_Texture",
+         "name":"grama",
          "spacing":0,
          "tilecount":256,
          "tileheight":64,
