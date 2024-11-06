@@ -1,7 +1,9 @@
 # Procurando o robô
 Projeto do semestre 2024.2.
 ## Premissa
-Irmãos se perdem em uma caverna densa e precisam se reencontrar enquanto enfrentam dificuldades que habitam o labirinto natural. O labirinto está em constante mudança, com paredes que se reconfiguram, tornando a navegação ainda mais desafiadora. No caminho, eles encontram  baús misteriosos que pode conter itens úteis ou armadilhas traiçoeiras como os [mimicos em Dungeons & Dragons](https://webappstatic.buzzfeed.com/static/2023-04/7/12/asset/3f1cba650973/anigif_sub-buzz-452-1680871444-1.gif), complicando ainda mais sua jornada. Os jogadores devem se comunicar e colaborar para superar desafios, decidir como lidar com os baús e encontrar maneiras de se adaptar às mudanças do labirinto. A experiência explora a amizade e a resiliência, enquanto tentam escapar da mata antes que ela os consuma. 
+Para um jogo cooperativo de duas pessoas em Twinery, a história segue a Dra. Susan Calvin, uma robopsicóloga, e o Dr. Peter Bogert, um matemático, em sua missão de localizar um robô perdido com uma modificação perigosa na Primeira Lei da Robótica. O robô, escondido entre outros 62 robôs idênticos, representa uma ameaça potencial se não for encontrado. Cada jogador assume um dos papéis: o da Dra. Calvin, que foca na análise psicológica dos robôs, e o do Dr. Bogert, responsável pelos testes técnicos e matemáticos. Com habilidades distintas, eles colaboram para identificar o robô anômalo antes que seja tarde demais.
+
+Enquanto a Dra. Calvin realiza entrevistas e observa reações emocionais, o Dr. Bogert aplica cálculos e testes para detectar irregularidades comportamentais. Decisões conjuntas influenciam a narrativa, criando novos desafios e efeitos inesperados, e os jogadores precisam compartilhar informações para resolver o mistério. No clímax do jogo, a dupla enfrenta um dilema final: uma escolha sobre o destino do robô, que dependerá das evidências coletadas e da visão de cada personagem sobre como lidar com o perigo.
 
 ### Referências do jogo
 
