@@ -35,3 +35,5 @@ Em um jogo ideal com alto orçamento, a narrativa expandiria para cobrir vários
 ### Fontes de receitas
 
 Para monetizar o jogo, "Procurando o Robô" oferecerá novas fases baseadas no livro "Eu robô" de Isaac Asimov
+
+(https://lmenterprise.github.io/mazel/cliente/)
