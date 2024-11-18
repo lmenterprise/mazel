@@ -225,15 +225,11 @@ segundoclick: false
 
 
 --
-[JavaScript]
-const audioObj = document.createElement(&#39;audio&#39;)
-audioObj.setAttribute(&#39;id&#39;, &#39;conversa&#39;)
-audioObj.setAttribute(&#39;autoplay&#39;, &#39;true&#39;)
-document.body.appendChild(audioObj)
-[continued]
 
   
-  [[ {embed image: &#39;capa.jpg&#39;} -&gt;Apresentar]]</tw-passagedata><tw-passagedata pid="2" name="Contracapa" tags="" position="725,625" size="100,100">chaveAmarela: true
+  [[ {embed image: &#39;capa.jpg&#39;} -&gt;Apresentar]]
+  
+  &gt;Clique na imagem</tw-passagedata><tw-passagedata pid="2" name="Contracapa" tags="" position="725,625" size="100,100">chaveAmarela: true
 --
 
 É aqui que tem o texto da contra capa.
@@ -286,6 +282,12 @@ Escolha a sala: {text input for: &#39;sala&#39;}
 Coloque seu ultimo nome: {text input for: &#39;sobrenome&#39;}
 
 aqui começa a [[jornada -&gt;Inicio]]</tw-passagedata><tw-passagedata pid="7" name="Apresentar" tags="" position="950,175" size="100,100">
+[JavaScript]
+const audioObj = document.createElement(&#39;audio&#39;)
+audioObj.setAttribute(&#39;id&#39;, &#39;conversa&#39;)
+audioObj.setAttribute(&#39;autoplay&#39;, &#39;true&#39;)
+document.body.appendChild(audioObj)
+[continued]
 
 A história segue a Dra. Susan Calvin, uma robopsicóloga, e o Dr. Peter Bogert, um matemático, em sua missão de localizar um robô perdido com uma modificação perigosa na Primeira Lei da Robótica. O robô, escondido entre outros 62 robôs idênticos, representa uma ameaça potencial se não for encontrado. Cada jogador assume um dos papéis: o da Dra. Calvin, que foca na análise psicológica dos robôs, e o do Dr. Bogert, responsável pelos testes técnicos e matemáticos. Com habilidades distintas, eles colaboram para identificar o robô anômalo antes que seja tarde demais.
 
@@ -305,7 +307,136 @@ Preparado?
 --
 Digite a sala da partida: {text input for: &#39;sala&#39;}
 
-&gt; [[Entrar na partida-&gt;Apresentar o caso]]</tw-passagedata><tw-passagedata pid="11" name="Solo-0" tags="" position="1525,175" size="100,100"></tw-passagedata><tw-passagedata pid="12" name="Apresentar o caso" tags="" position="1150,475" size="100,100">O desconforto ao chegar à Hiperbase (um lugar no espaço onde eles fazem testes com robôs, testes esses que não podem ser realizados no planeta terra).Foi mais profundo do que o esperado para ambos, sob a supervisão constante do Major-General Kallner, estavam ali para solucionar um problema que ameaçava tudo o que sabiam sobre robótica. 
+&gt; [[Entrar na partida-&gt;Apresentar o caso]]</tw-passagedata><tw-passagedata pid="11" name="Solo-0" tags="" position="1525,175" size="100,100"></tw-passagedata><tw-passagedata pid="12" name="Apresentar o caso" tags="" position="1150,475" size="100,100">[JavaScript]
+window.setup = {}
+
+setup.loadError = function (oError) {
+  throw new URIError(
+    &#39;The script &#39; + oError.target.src + &quot; didn&#39;t load correctly.&quot;
+  )
+}
+
+setup.loadScript = function (url, onloadFunction) {
+  const newScript = document.createElement(&#39;script&#39;)
+  newScript.onerror = setup.loadError
+  if (onloadFunction) {
+    newScript.onload = onloadFunction
+  }
+  document.head.appendChild(newScript)
+  newScript.async = true
+  newScript.src = url
+}
+
+const audio = document.getElementById(&#39;conversa&#39;)
+console.log(&#39;audio&#39;, audio)
+
+const iceServers = {
+  iceServers: [
+    {
+      urls: &#39;stun:feira-de-jogos.dev.br&#39;
+    },
+    {
+      urls: &#39;turn:feira-de-jogos.dev.br&#39;,
+      username: &#39;adcipt20242&#39;,
+      credential: &#39;adcipt20242&#39;
+    }
+  ]
+}
+
+let midias
+navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+  .then((stream) =&gt; {
+    midias = stream
+    console.log(&#39;midias&#39;, midias)
+  })
+  .catch((error) =&gt; console.error(error))
+
+setup.loadScript(&#39;https://cdn.socket.io/4.8.0/socket.io.min.js&#39;, () =&gt; {
+  let socket
+  if (window.location.host === &#39;feira-de-jogos.dev.br&#39;) {
+    socket = io({ path: &#39;/adcipt20242/socket.io/&#39; })
+  } else {
+    socket = io()
+  }
+
+  const sala = engine.state.get(&#39;sala&#39;)
+  console.log(&#39;sala&#39;, sala)
+
+  socket.on(&#39;connect&#39;, () =&gt; {
+    socket.emit(&#39;entrar-na-sala&#39;, sala)
+  })
+
+  socket.on(&#39;jogadores&#39;, (jogadores) =&gt; {
+    console.log(jogadores)
+    if (jogadores.segundo) {
+      if (jogadores.primeiro === socket.id) {
+        const remoteConnection = new RTCPeerConnection(iceServers)
+        const dadosJogo = remoteConnection.createDataChannel(&#39;dadosJogo&#39;, { negotiated: true, id: 0 })
+        console.log(&#39;remoteConnection&#39;, remoteConnection)
+        console.log(&#39;dadosJogo&#39;, dadosJogo)
+
+        remoteConnection.onicecandidate = function ({ candidate }) {
+          candidate &amp;&amp; socket.emit(&#39;candidate&#39;, sala, candidate)
+        }
+
+        remoteConnection.ontrack = function ({ streams: [midia] }) {
+          audio.srcObject = midia
+          console.log(&#39;audio.srcObject&#39;, audio.srcObject)
+        }
+
+        if (midias) {
+          midias.getTracks()
+            .forEach((track) =&gt; remoteConnection.addTrack(track, midias))
+        }
+
+        socket.on(&#39;offer&#39;, (description) =&gt; {
+          remoteConnection.setRemoteDescription(description)
+            .then(() =&gt; remoteConnection.createAnswer())
+            .then((answer) =&gt; remoteConnection.setLocalDescription(answer))
+            .then(() =&gt; socket.emit(&#39;answer&#39;, sala, remoteConnection.localDescription))
+        })
+
+        socket.on(&#39;candidate&#39;, (candidate) =&gt; {
+          remoteConnection.addIceCandidate(candidate)
+        })
+      } else if (jogadores.segundo === socket.id) {
+        const localConnection = new RTCPeerConnection(iceServers)
+        const dadosJogo = localConnection.createDataChannel(&#39;dadosJogo&#39;, { negotiated: true, id: 0 })
+        console.log(&#39;localConnection&#39;, localConnection)
+        console.log(&#39;dadosJogo&#39;, dadosJogo)
+
+        localConnection.onicecandidate = function ({ candidate }) {
+          candidate &amp;&amp; socket.emit(&#39;candidate&#39;, sala, candidate)
+        }
+
+        localConnection.ontrack = function ({ streams: [stream] }) {
+          audio.srcObject = stream
+          console.log(&#39;audio.srcObject&#39;, audio.srcObject)
+        }
+
+        if (midias) {
+          midias.getTracks()
+            .forEach((track) =&gt; localConnection.addTrack(track, midias))
+        }
+
+        localConnection.createOffer()
+          .then((offer) =&gt; localConnection.setLocalDescription(offer))
+          .then(() =&gt; socket.emit(&#39;offer&#39;, sala, localConnection.localDescription))
+
+        socket.on(&#39;answer&#39;, (description) =&gt; {
+          localConnection.setRemoteDescription(description)
+        })
+
+        socket.on(&#39;candidate&#39;, (candidate) =&gt; {
+          localConnection.addIceCandidate(candidate)
+        })
+      }
+    }
+  })
+})
+[continued]
+
+O desconforto ao chegar à Hiperbase (um lugar no espaço onde eles fazem testes com robôs, testes esses que não podem ser realizados no planeta terra).Foi mais profundo do que o esperado para ambos, sob a supervisão constante do Major-General Kallner, estavam ali para solucionar um problema que ameaçava tudo o que sabiam sobre robótica. 
 
 O General Kallner parecia desesperado durante o jantar, seu olhar desviava do prato ao relógio, e sua postura rígida não escondia a tensão. Enquanto a Dra.Calvin psicóloga-Chefe da U.S. Robôs estava inquieta o Dr.Peter Bogert o Diretor-Matemático parecia entediado, como se o peso desse dilema fosse uma inconveniência e não uma responsabilidade crítica.
 
