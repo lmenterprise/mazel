@@ -21,19 +21,13 @@ Literatura:
 Em um jogo ideal com alto orçamento, a narrativa expandiria para cobrir vários capítulos do livro, cada um como uma fase detalhada onde os jogadores exploram dilemas das Leis da Robótica em cenários imersivos e variados. Cada fase incluiria múltiplos finais, gráficos avançados e escolhas complexas que desbloqueiam diferentes personagens e pontos de vista. Com mecânicas que combinam mistério, ação e quebra-cabeças, o jogo proporcionaria uma experiência profunda e cheia de reviravoltas, explorando as consequências éticas e emocionais das decisões dos jogadores.
 
 ### Universo
-
-
-
-### Regras
-
-
+A história se passa em um futuro onde a humanidade alcançou avanços tecnológicos que permitem a exploração espacial e a criação de robôs altamente sofisticados. O cenário principal é a Hiperbase, uma instalação espacial isolada e avançada, onde testes e experimentos que não podem ser realizados na Terra são conduzidos.
 
 ### Objetivo
-
-
+O objetivo central é identificar o Nestor 10 modificado, que se misturou entre outros robôs idênticos na base. A narrativa é impulsionada por uma corrida contra o tempo: evitar que o robô modificado cause um desastre, enquanto as diferenças ideológicas entre os personagens criam conflitos internos que dificultam a solução do problema.
 
 ### Fontes de receitas
 
 Para monetizar o jogo, "Procurando o Robô" oferecerá novas fases baseadas no livro "Eu robô" de Isaac Asimov
 
-(https://lmenterprise.github.io/mazel/cliente/)
+(https://procurando-o-robo.feira-de-jogos.dev.br/)
