@@ -302,7 +302,7 @@ Vão fazer isso usando as Três leis da robótica para criar desafios para achar
 
 &gt;[[Continuar-&gt; Quantos jogadores ]]
 
-</tw-passagedata><tw-passagedata pid="8" name=" Quantos jogadores " tags="" position="1400,50" size="100,100">Iniciar partida com:
+</tw-passagedata><tw-passagedata pid="8" name=" Quantos jogadores " tags="" position="1375,25" size="100,100">Iniciar partida com:
 
 &gt; [[1 jogador-&gt;Solo]]
 &gt; [[2 jogadores-&gt;Dupla]]</tw-passagedata><tw-passagedata pid="9" name="Solo" tags="" position="1550,75" size="100,100">jogadores: 1
@@ -310,134 +310,12 @@ Vão fazer isso usando as Três leis da robótica para criar desafios para achar
 Preparado?
 
 &gt; [[Sim!-&gt;Solo-0]]
-&gt; {restart link, label: &#39;Não!&#39;}</tw-passagedata><tw-passagedata pid="10" name="Dupla" tags="" position="1400,175" size="100,100">jogadores: 2
+&gt; {restart link, label: &#39;Não!&#39;}</tw-passagedata><tw-passagedata pid="10" name="Dupla" tags="" position="1400,150" size="100,100">jogadores: 2
 --
 Digite a sala da partida: {text input for: &#39;sala&#39;}
 
-[JavaScript]
-window.setup = {}
 
-setup.loadError = function (oError) {
-  throw new URIError(
-    &#39;The script &#39; + oError.target.src + &quot; didn&#39;t load correctly.&quot;
-  )
-}
-
-setup.loadScript = function (url, onloadFunction) {
-  const newScript = document.createElement(&#39;script&#39;)
-  newScript.onerror = setup.loadError
-  if (onloadFunction) {
-    newScript.onload = onloadFunction
-  }
-  document.head.appendChild(newScript)
-  newScript.async = true
-  newScript.src = url
-}
-
-const audio = document.getElementById(&#39;conversa&#39;)
-console.log(&#39;audio&#39;, audio)
-
-const iceServers = {
-  iceServers: [
-    {
-      urls: &#39;stun:feira-de-jogos.dev.br&#39;
-    },
-    {
-      urls: &#39;turn:feira-de-jogos.dev.br&#39;,
-      username: &#39;adcipt20242&#39;,
-      credential: &#39;adcipt20242&#39;
-    }
-  ]
-}
-
-navigator.mediaDevices.getUserMedia({ video: false, audio: true })
-  .then((stream) =&gt; {
-    setup.loadScript(&#39;https://cdn.socket.io/4.8.0/socket.io.min.js&#39;, () =&gt; {
-      let socket
-      if (window.location.host === &#39;feira-de-jogos.dev.br&#39;) {
-        socket = io({ path: &#39;/adcipt20242/socket.io/&#39; })
-      } else {
-        socket = io()
-      }
-
-      const sala = engine.state.get(&#39;sala&#39;)
-      console.log(&#39;sala&#39;, sala)
-
-      socket.on(&#39;connect&#39;, () =&gt; {
-        socket.emit(&#39;entrar-na-sala&#39;, sala)
-      })
-
-      socket.on(&#39;jogadores&#39;, (jogadores) =&gt; {
-        console.log(jogadores)
-        if (jogadores.segundo) {
-          if (jogadores.primeiro === socket.id) {
-            engine.state.set(&#39;jogador&#39;, &#39;primeiro&#39;)
-            const remoteConnection = new RTCPeerConnection(iceServers)
-            const dadosJogo = remoteConnection.createDataChannel(&#39;dadosJogo&#39;, { negotiated: true, id: 0 })
-            console.log(&#39;remoteConnection&#39;, remoteConnection)
-            console.log(&#39;dadosJogo&#39;, dadosJogo)
-
-            remoteConnection.onicecandidate = function ({ candidate }) {
-              candidate &amp;&amp; socket.emit(&#39;candidate&#39;, sala, candidate)
-            }
-
-            remoteConnection.ontrack = function ({ streams: [stream] }) {
-              audio.srcObject = stream
-              console.log(&#39;audio.srcObject&#39;, audio.srcObject)
-            }
-
-            stream.getTracks()
-              .forEach((track) =&gt; remoteConnection.addTrack(track, stream))
-
-            socket.on(&#39;offer&#39;, (description) =&gt; {
-              remoteConnection.setRemoteDescription(description)
-                .then(() =&gt; remoteConnection.createAnswer())
-                .then((answer) =&gt; remoteConnection.setLocalDescription(answer))
-                .then(() =&gt; socket.emit(&#39;answer&#39;, sala, remoteConnection.localDescription))
-            })
-
-            socket.on(&#39;candidate&#39;, (candidate) =&gt; {
-              remoteConnection.addIceCandidate(candidate)
-            })
-          } else if (jogadores.segundo === socket.id) {
-            engine.state.set(&#39;jogador&#39;, &#39;segundo&#39;)
-            const localConnection = new RTCPeerConnection(iceServers)
-            const dadosJogo = localConnection.createDataChannel(&#39;dadosJogo&#39;, { negotiated: true, id: 0 })
-            console.log(&#39;localConnection&#39;, localConnection)
-            console.log(&#39;dadosJogo&#39;, dadosJogo)
-
-            localConnection.onicecandidate = function ({ candidate }) {
-              candidate &amp;&amp; socket.emit(&#39;candidate&#39;, sala, candidate)
-            }
-
-            localConnection.ontrack = function ({ streams: [stream] }) {
-              audio.srcObject = stream
-              console.log(&#39;audio.srcObject&#39;, audio.srcObject)
-            }
-
-            stream.getTracks()
-              .forEach((track) =&gt; localConnection.addTrack(track, stream))
-
-            localConnection.createOffer()
-              .then((offer) =&gt; localConnection.setLocalDescription(offer))
-              .then(() =&gt; socket.emit(&#39;offer&#39;, sala, localConnection.localDescription))
-
-            socket.on(&#39;answer&#39;, (description) =&gt; {
-              localConnection.setRemoteDescription(description)
-            })
-
-            socket.on(&#39;candidate&#39;, (candidate) =&gt; {
-              localConnection.addIceCandidate(candidate)
-            })
-          }
-        }
-      })
-    })
-  })
-  .catch((error) =&gt; console.error(error))
-[continued]
-
-&gt; [[Entrar na partida-&gt;Apresentar o caso]]
+&gt; [[Entrar na partida-&gt;js]]
 
 
 
@@ -463,7 +341,7 @@ Novamente Susan se manifestou perguntando  por que eles não poderiam simplesmen
 &gt;[[Aceitar o caso-&gt;visao delas]]
 
 &gt;[[Recusar o caso-&gt;perde1s]]
-</tw-passagedata><tw-passagedata pid="12" name="Apresentar o caso" tags="" position="1400,300" size="100,100">
+</tw-passagedata><tw-passagedata pid="12" name="Apresentar o caso" tags="" position="1400,400" size="100,100">
 
 O desconforto ao chegar à Hiperbase (um lugar no espaço onde eles fazem testes com robôs, testes esses que não podem ser realizados no planeta terra).Foi mais profundo do que o esperado para ambos, sob a supervisão constante do Major-General Kallner, estavam ali para solucionar um problema que ameaçava tudo o que sabiam sobre robótica. 
 
@@ -1907,4 +1785,127 @@ errou
 
 Peter, sem dúvida aliviado por finalmente saber qual robô estava fora de controle, se aproximou rapidamente do painel de controle. “Desativá-lo agora!” — ele ordenou, com uma urgência que só a situação poderia gerar.
 
-&gt;[[CONTINUE-&gt;Finaldela]]</tw-passagedata></tw-storydata></html>
+&gt;[[CONTINUE-&gt;Finaldela]]</tw-passagedata><tw-passagedata pid="56" name="js" tags="" position="1400,275" size="100,100">[JavaScript]
+window.setup = {}
+
+setup.loadError = function (oError) {
+  throw new URIError(
+    &#39;The script &#39; + oError.target.src + &quot; didn&#39;t load correctly.&quot;
+  )
+}
+
+setup.loadScript = function (url, onloadFunction) {
+  const newScript = document.createElement(&#39;script&#39;)
+  newScript.onerror = setup.loadError
+  if (onloadFunction) {
+    newScript.onload = onloadFunction
+  }
+  document.head.appendChild(newScript)
+  newScript.async = true
+  newScript.src = url
+}
+
+const audio = document.getElementById(&#39;conversa&#39;)
+console.log(&#39;audio&#39;, audio)
+
+const iceServers = {
+  iceServers: [
+    {
+      urls: &#39;stun:feira-de-jogos.dev.br&#39;
+    },
+    {
+      urls: &#39;turn:feira-de-jogos.dev.br&#39;,
+      username: &#39;adcipt20242&#39;,
+      credential: &#39;adcipt20242&#39;
+    }
+  ]
+}
+
+navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+  .then((stream) =&gt; {
+    setup.loadScript(&#39;https://cdn.socket.io/4.8.0/socket.io.min.js&#39;, () =&gt; {
+      let socket
+      if (window.location.host === &#39;feira-de-jogos.dev.br&#39;) {
+        socket = io({ path: &#39;/adcipt20242/socket.io/&#39; })
+      } else {
+        socket = io()
+      }
+
+      const sala = engine.state.get(&#39;sala&#39;)
+      console.log(&#39;sala&#39;, sala)
+
+      socket.on(&#39;connect&#39;, () =&gt; {
+        socket.emit(&#39;entrar-na-sala&#39;, sala)
+      })
+
+      socket.on(&#39;jogadores&#39;, (jogadores) =&gt; {
+        console.log(jogadores)
+        if (jogadores.segundo) {
+          if (jogadores.primeiro === socket.id) {
+            engine.state.set(&#39;jogador&#39;, &#39;primeiro&#39;)
+            const remoteConnection = new RTCPeerConnection(iceServers)
+            const dadosJogo = remoteConnection.createDataChannel(&#39;dadosJogo&#39;, { negotiated: true, id: 0 })
+            console.log(&#39;remoteConnection&#39;, remoteConnection)
+            console.log(&#39;dadosJogo&#39;, dadosJogo)
+
+            remoteConnection.onicecandidate = function ({ candidate }) {
+              candidate &amp;&amp; socket.emit(&#39;candidate&#39;, sala, candidate)
+            }
+
+            remoteConnection.ontrack = function ({ streams: [stream] }) {
+              audio.srcObject = stream
+              console.log(&#39;audio.srcObject&#39;, audio.srcObject)
+            }
+
+            stream.getTracks()
+              .forEach((track) =&gt; remoteConnection.addTrack(track, stream))
+
+            socket.on(&#39;offer&#39;, (description) =&gt; {
+              remoteConnection.setRemoteDescription(description)
+                .then(() =&gt; remoteConnection.createAnswer())
+                .then((answer) =&gt; remoteConnection.setLocalDescription(answer))
+                .then(() =&gt; socket.emit(&#39;answer&#39;, sala, remoteConnection.localDescription))
+            })
+
+            socket.on(&#39;candidate&#39;, (candidate) =&gt; {
+              remoteConnection.addIceCandidate(candidate)
+            })
+          } else if (jogadores.segundo === socket.id) {
+            engine.state.set(&#39;jogador&#39;, &#39;segundo&#39;)
+            const localConnection = new RTCPeerConnection(iceServers)
+            const dadosJogo = localConnection.createDataChannel(&#39;dadosJogo&#39;, { negotiated: true, id: 0 })
+            console.log(&#39;localConnection&#39;, localConnection)
+            console.log(&#39;dadosJogo&#39;, dadosJogo)
+
+            localConnection.onicecandidate = function ({ candidate }) {
+              candidate &amp;&amp; socket.emit(&#39;candidate&#39;, sala, candidate)
+            }
+
+            localConnection.ontrack = function ({ streams: [stream] }) {
+              audio.srcObject = stream
+              console.log(&#39;audio.srcObject&#39;, audio.srcObject)
+            }
+
+            stream.getTracks()
+              .forEach((track) =&gt; localConnection.addTrack(track, stream))
+
+            localConnection.createOffer()
+              .then((offer) =&gt; localConnection.setLocalDescription(offer))
+              .then(() =&gt; socket.emit(&#39;offer&#39;, sala, localConnection.localDescription))
+
+            socket.on(&#39;answer&#39;, (description) =&gt; {
+              localConnection.setRemoteDescription(description)
+            })
+
+            socket.on(&#39;candidate&#39;, (candidate) =&gt; {
+              localConnection.addIceCandidate(candidate)
+            })
+          }
+        }
+      })
+    })
+  })
+  .catch((error) =&gt; console.error(error))
+[continued]
+  
+&gt;[[continue-&gt;Apresentar o caso]]</tw-passagedata></tw-storydata></html>
