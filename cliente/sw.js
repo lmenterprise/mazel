@@ -7,7 +7,7 @@ const precacheResources = [
   './index.html',
   './capa.png',
   './robo972.png',
-  './matematica.png',
+  './matematica.png'
 ]
 
 self.addEventListener('install', (event) => {
